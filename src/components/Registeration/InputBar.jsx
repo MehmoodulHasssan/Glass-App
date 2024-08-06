@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 
 const InputBar = ({ name, type }) => {
@@ -21,4 +22,4 @@ const InputBar = ({ name, type }) => {
     )
 }
 
-export default InputBar
+export default InputBar;

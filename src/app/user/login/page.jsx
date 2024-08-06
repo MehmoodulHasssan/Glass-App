@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import InputBar from '@/components/Registeration/InputBar';
+import InputBar from '../../../components/Registeration/InputBar';
 import Button from '@/components/Registeration/Button';
 import Wrapper from '@/components/Registeration/Wrapper';
 import { useRouter } from 'next/navigation';
