@@ -1,19 +1,43 @@
 'use client'
-import React from 'react';
+import React, { useEffect } from 'react';
 import InputBar from '@/components/Registeration/InputBar';
 import Button from '@/components/Registeration/Button';
 import Wrapper from '@/components/Registeration/Wrapper';
 import { useRouter } from 'next/navigation';
+import toast, { Toaster } from 'react-hot-toast';
+import usePost from '@/hooks/usePost';
 
 const LoginPage = () => {
     const router = useRouter()
-    const handleSubmit = (formData) => {
+    const { isError,
+        setIsError,
+        isLoading,
+        isSuccess,
+        postData,
+    } = usePost()
+
+    const handleSubmit = async (formData) => {
         const data = Object.fromEntries(formData.entries())
-        
+        console.log(data)
+        await postData({ url: 'http://localhost:8000/api/auth/login', data })
     }
+
+    useEffect(() => {
+        if (isSuccess) {
+            router.push('/user/chat');
+        }
+    }, [isSuccess, router]);
+
+    useEffect(() => {
+        if (isError.state) {
+            toast.error(isError.data.message);
+            setIsError({ state: false, data: '' });
+        }
+    }, [isError, setIsError]);
 
     return (
         <div className="flex justify-center items-center h-screen w-screen">
+            <Toaster />
             <Wrapper action={handleSubmit}>
                 <h1 className="text-3xl font-semibold">
                     Login <span className="text-blue-400">GlassApp</span>
@@ -22,7 +46,7 @@ const LoginPage = () => {
                 <InputBar type="password" name="password" />
                 <div className="flex flex-col gap-2 w-full">
                     <p onClick={() => router.push('/user/signup')} className='hover:text-slate-300 hover:cursor-pointer'>Not have an account?</p>
-                    <Button>Login</Button>
+                    <Button>{isLoading ? 'Logging In...' : 'Login'}</Button>
                 </div>
             </Wrapper>
         </div>
