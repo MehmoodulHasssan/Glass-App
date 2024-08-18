@@ -3,9 +3,12 @@ import { useState, useEffect, useRef } from 'react'
 import Outgoing from './Outgoing'
 import Incomming from './Incomming'
 import { LuSend } from "react-icons/lu";
+import { useAuthSelected } from '@/store/AuthSelectedContext'
 
-const ActiveChatContainer = ({ displayMessages, message, setMessage, sendMessage, username }) => {
+const ActiveChatContainer = ({ displayMessages, message, setMessage, sendMessage, username, profilePic: receiverProfile }) => {
     const messageEndRef = useRef(null);
+
+    const { profilePic: userProfile } = useAuthSelected()
 
     const scrollToBottom = () => {
         messageEndRef.current?.scrollIntoView({ behaviour: 'smooth', block: 'end' });
@@ -22,8 +25,16 @@ const ActiveChatContainer = ({ displayMessages, message, setMessage, sendMessage
                 {displayMessages?.length > 0 && displayMessages.map((message, index) => {
                     return (
                         <>
-                            {message.sent && <Outgoing key={Math.random()} message={message.sent} />}
-                            {message.received && <Incomming key={Math.random()} message={message.received} />}
+                            {message.sent && <Outgoing
+                                key={Math.random()}
+                                message={message.sent}
+                                profilePic={userProfile}
+                            />}
+                            {message.received && <Incomming
+                                key={Math.random()}
+                                message={message.received}
+                                profilePic={receiverProfile}
+                            />}
                             {index === displayMessages.length - 1 && <div ref={messageEndRef} />}
                         </>
                     )

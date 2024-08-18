@@ -30,7 +30,8 @@ const Conversation = ({ conversation }) => {
             handleCurrentChat({
                 username: conversation.username,
                 id: conversation._id,
-                messages: data.conversation
+                messages: data.conversation,
+                profilePic: conversation.profilePic
             })
         }
     }, [data])

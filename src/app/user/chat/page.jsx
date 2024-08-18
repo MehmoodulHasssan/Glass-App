@@ -8,8 +8,6 @@ import NoChatContainer from '@/components/ChatBox/chatContainer/NoChatContainer'
 import useFetch from '@/hooks/useFetch';
 import usePost from '@/hooks/usePost';
 import { useAuthSelected} from '@/store/AuthSelectedContext';
-import { useRouter } from 'next/navigation';
-import axios from 'axios';
 import { useSocket } from '@/store/SocketContext';
 
 // const socket = io('http://localhost:8000'); // Connect to the server
@@ -108,6 +106,7 @@ const ChatPage = () => {
                     setMessage={setMessage}
                     message={message}
                     username={selectedChat?.username}
+                    profilePic={selectedChat?.profilePic}
                     />}
                 {!selectedChat && <NoChatContainer />}
             </div>

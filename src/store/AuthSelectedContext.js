@@ -4,6 +4,7 @@ import { createContext, useReducer, useContext } from 'react';
 const Context = createContext({
   currentState: '',
   token: '',
+  profilePic: '',
   selectedChat: null,
   handleCurrentChat: () => {},
   handleLogin: () => {},
@@ -16,13 +17,15 @@ function reducer(state, action) {
       return {
         ...state,
         currentState: 'loggedIn',
-        token: action.payload,
+        token: action.payload.token,
+        profilePic: action.payload.profilePic,
       };
     case 'LOGOUT':
       return {
         ...state,
         currentState: 'loggedOut',
         token: '',
+        profilePic: '',
       };
     case 'CURRENT_CHAT':
       return {
@@ -55,6 +58,7 @@ export default function ContextProvider({ children }) {
   const ctxValue = {
     currentState: state.currentState,
     selectedChat: state.selectedChat,
+    profilePic: state.profilePic,
     token: state.token, // Fixed this line
     handleCurrentChat,
     handleLogin,

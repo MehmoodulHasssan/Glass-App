@@ -9,6 +9,7 @@ import usePost from '@/hooks/usePost';
 import { useAuthSelected } from '@/store/AuthSelectedContext';
 
 
+
 const LoginPage = () => {
     const { handleLogin } = useAuthSelected()
     const router = useRouter()
@@ -27,7 +28,10 @@ const LoginPage = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            handleLogin(resData.token)
+            handleLogin({
+                token: resData.token,
+                profilePic: resData.profilePic,
+            })
             router.push('/user/chat');
         }
     }, [isSuccess, router]);
