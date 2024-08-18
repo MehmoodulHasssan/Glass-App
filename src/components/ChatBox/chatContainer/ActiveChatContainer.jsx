@@ -4,7 +4,7 @@ import Outgoing from './Outgoing'
 import Incomming from './Incomming'
 import { LuSend } from "react-icons/lu";
 
-const ActiveChatContainer = ({ displayMessages, message, setMessage, sendMessage }) => {
+const ActiveChatContainer = ({ displayMessages, message, setMessage, sendMessage, username }) => {
     const messageEndRef = useRef(null);
 
     const scrollToBottom = () => {
@@ -16,14 +16,14 @@ const ActiveChatContainer = ({ displayMessages, message, setMessage, sendMessage
     return (
         <div className='flex flex-col justify-between h-[34rem] w-8/12'>
             <div className='flex items-center gap-1 bg-slate-500 px-2 h-12 w-'>
-                To: <span className='text-gray-800 text-lg font-bold'> Sam edwards</span>
+                To: <span className='text-gray-800 text-lg font-bold'> {username}</span>
             </div>
             <div className='h-full overflow-scroll'>
-                {displayMessages.map((message, index) => {
+                {displayMessages?.length > 0 && displayMessages.map((message, index) => {
                     return (
                         <>
-                            {message.sent && <Outgoing key={index} message={message.sent} />}
-                            {message.received && <Incomming key={index} message={message.received} />}
+                            {message.sent && <Outgoing key={Math.random()} message={message.sent} />}
+                            {message.received && <Incomming key={Math.random()} message={message.received} />}
                             {index === displayMessages.length - 1 && <div ref={messageEndRef} />}
                         </>
                     )

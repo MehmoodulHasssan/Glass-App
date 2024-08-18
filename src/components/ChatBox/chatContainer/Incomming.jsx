@@ -1,4 +1,5 @@
 import React from 'react'
+import { getTime, getDate } from '@/utils/date&time'
 
 const Incomming = ({ message }) => {
     return (
@@ -11,10 +12,10 @@ const Incomming = ({ message }) => {
                 </div>
             </div>
             <div className="chat-header">
-                <time className="text-xs opacity-50">12:46</time>
+                <time className="text-xs opacity-50">{getDate(message.time)}</time>
             </div>
-            <div className="chat-bubble">{message}</div>
-            <div className="chat-footer opacity-50">Seen at 12:46</div>
+            <div className="chat-bubble">{message.message}</div>
+            <div className="chat-footer opacity-50">Received at {getTime(message.time)}</div>
         </div>
     )
 }

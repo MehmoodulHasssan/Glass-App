@@ -6,24 +6,28 @@ import Wrapper from '@/components/Registeration/Wrapper';
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
 import usePost from '@/hooks/usePost';
+import { useAuthSelected } from '@/store/AuthSelectedContext';
+
 
 const LoginPage = () => {
+    const { handleLogin } = useAuthSelected()
     const router = useRouter()
     const { isError,
         setIsError,
         isLoading,
         isSuccess,
         postData,
+        resData
     } = usePost()
 
     const handleSubmit = async (formData) => {
         const data = Object.fromEntries(formData.entries())
-        console.log(data)
         await postData({ url: 'http://localhost:8000/api/auth/login', data })
     }
 
     useEffect(() => {
         if (isSuccess) {
+            handleLogin(resData.token)
             router.push('/user/chat');
         }
     }, [isSuccess, router]);

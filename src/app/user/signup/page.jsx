@@ -21,7 +21,6 @@ const SignupPage = () => {
 
     const handleSubmit = async (formData) => {
         const data = Object.fromEntries(formData.entries())
-        console.log(data)
         if (!validiateData(data)) return;
         await postData({ url: 'http://localhost:8000/api/auth/signup', data })
     }
