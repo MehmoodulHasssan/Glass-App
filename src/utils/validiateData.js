@@ -20,11 +20,11 @@ const validiateData = (data) => {
     );
     return false;
   }
-  const validGenders = ['Male', 'Female'];
-  if (!validGenders.includes(gender)) {
-    toast.error('Invalid gender. Please select "Male", or "Female"');
-    return false;
-  }
+  // const validGenders = ['Male', 'Female'];
+  // if (!validGenders.includes(gender)) {
+  //   toast.error('Invalid gender. Please select "Male", or "Female"');
+  //   return false;
+  // }
   if (!/^\d{10,}$/.test(phone)) {
     toast.error('Phone number must be numeric and at least 10 digits long.');
     return false;
