@@ -4,32 +4,25 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 const usePost = () => {
-  const [isError, setIsError] = useState({
-    state: false,
-    data: '',
-  });
+  const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [resData, setResData] = useState('');
 
   async function postData({ url, data }) {
     setResData('');
-    setIsError({
-      state: false,
-      data: '',
-    });
+    setIsError(false);
     setIsSuccess(false);
     setIsLoading(true);
     try {
       const res = await axios.post(url, data);
+      console.log(res.data);
       setResData(res.data);
       setIsSuccess(true);
     } catch (error) {
-      setIsError({
-        state: true,
-        data: error.response?.data || error.message,
-      });
-      // console.log(isError);
+      console.log(error);
+      setIsError(error.response?.data || error.message);
+      console.log(error.response?.data || error.message);
     } finally {
       setIsLoading(false);
     }
