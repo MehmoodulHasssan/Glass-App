@@ -33,9 +33,9 @@ const SignupPage = () => {
     }, [isSuccess, router]);
 
     useEffect(() => {
-        if (isError.state) {
-            toast.error(isError.data.message);
-            setIsError({ state: false, data: '' });
+        if (isError) {
+            toast.error(isError.message);
+            setIsError(false);
         }
     }, [isError, setIsError]);
 
