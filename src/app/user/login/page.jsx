@@ -32,7 +32,7 @@ const LoginPage = () => {
                 token: resData.token,
                 profilePic: resData.profilePic,
             })
-            router.push('/user/chat');
+            router.push('/');
         }
     }, [isSuccess, router]);
 
