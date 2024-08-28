@@ -3,10 +3,9 @@ import { useAuthSelected } from '@/store/AuthSelectedContext'
 import useFetch from '@/hooks/useFetch'
 import { useSocket } from '@/store/SocketContext'
 
-
 const Conversation = ({ conversation }) => {
     const { onlineUsers } = useSocket()
-    const { handleCurrentChat } = useAuthSelected()
+    const { handleCurrentChat, handleOpenChatContainer } = useAuthSelected()
     const [isOnline, setIsOnline] = useState(false)
     const { data,
         isLoading,
@@ -23,6 +22,7 @@ const Conversation = ({ conversation }) => {
     }, [onlineUsers])
 
     const fetchChat = async () => {
+        handleOpenChatContainer(true)
         await fetchData(`http://localhost:8000/api/message/${conversation._id}`)
     }
     useEffect(() => {

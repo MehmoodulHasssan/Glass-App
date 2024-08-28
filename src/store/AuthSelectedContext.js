@@ -6,9 +6,11 @@ const Context = createContext({
   token: '',
   profilePic: '',
   selectedChat: null,
+  openChatContainer: false,
   handleCurrentChat: () => {},
   handleLogin: () => {},
   handleLogout: () => {},
+  handleOpenChatContainer: () => {},
 });
 
 function reducer(state, action) {
@@ -31,6 +33,11 @@ function reducer(state, action) {
       return {
         ...state,
         selectedChat: action.payload,
+      };
+    case 'OPEN_CHAT_CONTAINER':
+      return {
+        ...state,
+        openChatContainer: action.payload,
       };
     default:
       return state;
@@ -55,14 +62,20 @@ export default function ContextProvider({ children }) {
     dispatch({ type: 'LOGOUT' });
   };
 
+  const handleOpenChatContainer = (state) => {
+    dispatch({ type: 'OPEN_CHAT_CONTAINER', payload: state });
+  };
+
   const ctxValue = {
     currentState: state.currentState,
     selectedChat: state.selectedChat,
     profilePic: state.profilePic,
     token: state.token, // Fixed this line
+    openChatContainer: state.openChatContainer,
     handleCurrentChat,
     handleLogin,
     handleLogout,
+    handleOpenChatContainer,
   };
 
   return <Context.Provider value={ctxValue}>{children}</Context.Provider>;

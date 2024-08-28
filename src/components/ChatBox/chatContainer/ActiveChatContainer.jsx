@@ -4,11 +4,11 @@ import Outgoing from './Outgoing'
 import Incomming from './Incomming'
 import { LuSend } from "react-icons/lu";
 import { useAuthSelected } from '@/store/AuthSelectedContext'
+import { IoArrowBackOutline } from "react-icons/io5";
 
 const ActiveChatContainer = ({ displayMessages, message, setMessage, sendMessage, username, profilePic: receiverProfile }) => {
     const messageEndRef = useRef(null);
-
-    const { profilePic: userProfile } = useAuthSelected()
+    const { profilePic: userProfile, handleOpenChatContainer, openChatContainer } = useAuthSelected()
 
     const scrollToBottom = () => {
         messageEndRef.current?.scrollIntoView({ behaviour: 'smooth', block: 'end' });
@@ -17,9 +17,15 @@ const ActiveChatContainer = ({ displayMessages, message, setMessage, sendMessage
         scrollToBottom()
     }, [displayMessages])
     return (
-        <div className='flex flex-col justify-between h-[34rem] w-8/12'>
-            <div className='flex items-center gap-1 bg-slate-500 px-2 h-12 w-'>
-                To: <span className='text-gray-800 text-lg font-bold'> {username}</span>
+        <div className={`relative ${openChatContainer ? 'flex' : 'hidden'} flex-col w-full h-full justify-between lg:flex lg:h-[34rem] lg:w-8/12`}>
+            <div className='flex items-center gap-1 sticky top-0 bg-slate-500 px-2 h-12 w-'>
+                <div
+                    className='flex mr-3 items-center text-slate-200 bg-gray-400 p-1 rounded-full'
+                    onClick={() => handleOpenChatContainer(false)}
+                >
+                    <IoArrowBackOutline />
+                </div>
+                <div className='text-gray-800 text-lg font-bold'><span className='text-slate-200'>To:</span> {username}</div>
             </div>
             <div className='h-full overflow-scroll'>
                 {displayMessages?.length > 0 && displayMessages.map((message, index) => {
@@ -40,7 +46,7 @@ const ActiveChatContainer = ({ displayMessages, message, setMessage, sendMessage
                     )
                 })}
             </div>
-            <form onSubmit={sendMessage} className='flex justify-center items-center w-full gap-2'>
+            <form onSubmit={sendMessage} className='flex justify-center items-center w-full gap-2 sticky bottom-0 py-2 lg:py-0'>
                 <input
                     type="text"
                     placeholder="Type here"

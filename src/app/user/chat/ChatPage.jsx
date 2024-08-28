@@ -9,10 +9,12 @@ import useFetch from '@/hooks/useFetch';
 import usePost from '@/hooks/usePost';
 import { useAuthSelected} from '@/store/AuthSelectedContext';
 import { useSocket } from '@/store/SocketContext';
+import { SlLogout } from "react-icons/sl";
+import LogoutButton from '@/components/ChatBox/sidebar/LogoutButton';
 
 // const socket = io('http://localhost:8000'); // Connect to the server
 const ChatPage = ({userData}) => {
-    const {selectedChat, currentState} =useAuthSelected()
+    const {selectedChat, currentState, openChatContainer} =useAuthSelected()
     const {socket, onlineUsers} =useSocket()
     const [message, setMessage] = useState('');
     const [displayMessages, setDisplayMessages] = useState([])
@@ -91,12 +93,13 @@ const ChatPage = ({userData}) => {
 
     return (
         <div className='flex justify-center items-center h-screen w-screen'>
-            <div className='flex text-slate-200 m-auto backdrop-blur-lg h-[34rem] w-10/12 divide-x-2 divide-slate-300'>
-                <div className='relative flex flex-col gap-4 w-4/12 p-8'>
+            <div className='flex w-full h-full text-slate-200 m-auto backdrop-blur-lg lg:h-[34rem] lg:w-10/12 lg:divide-x-2 lg:divide-slate-300'>
+                <div className={`relative w-full ${openChatContainer ? 'hidden' : 'flex'} flex-col gap-4 lg:w-4/12 lg:flex p-8`}>
                     <SearchBar />
                     <ConversationsList
                         data={userData }
                         />
+                    <LogoutButton/>
                 </div>
                 {selectedChat && <ActiveChatContainer
                     displayMessages={displayMessages}
@@ -106,7 +109,7 @@ const ChatPage = ({userData}) => {
                     username={selectedChat?.username}
                     profilePic={selectedChat?.profilePic}
                     />}
-                {!selectedChat && <NoChatContainer />}
+                {!selectedChat && <NoChatContainer/>}
             </div>
         </div>
     )
