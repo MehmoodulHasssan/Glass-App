@@ -23,15 +23,14 @@ const LoginPage = () => {
 
     const handleSubmit = async (formData) => {
         const data = Object.fromEntries(formData.entries())
+        console.log(data)
         await postData({ url: 'http://localhost:8000/api/auth/login', data })
     }
 
     useEffect(() => {
         if (isSuccess) {
-            handleLogin({
-                token: resData.token,
-                profilePic: resData.profilePic,
-            })
+            window.localStorage.setItem('profilePic', resData.profilePic)
+            handleLogin()
             router.push('/');
         }
     }, [isSuccess, router]);

@@ -20,6 +20,8 @@ const ChatPage = ({userData}) => {
     const [displayMessages, setDisplayMessages] = useState([])
     const {data,isLoading,isError,fetchData,}  = useFetch()
     const {isError:sendingFailed, isLoading:sending, isSuccess:sent, postData:sendMessage, setIsSuccess:setSent} = usePost()
+
+    console.log(selectedChat)
     
         useEffect(() => { 
             if (selectedChat && selectedChat.messages.messages?.length > 0) {

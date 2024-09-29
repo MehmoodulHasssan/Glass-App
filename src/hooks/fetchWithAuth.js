@@ -6,7 +6,7 @@ export async function fetchWithAuth(url, options = {}) {
   const cookieStore = cookies();
   const accessToken = cookieStore.get('accessToken')?.value;
   const refreshToken = cookieStore.get('refreshToken')?.value;
-
+  console.log(accessToken);
   try {
     // Make the API request with the token attached
     const response = await axios.get(url, {

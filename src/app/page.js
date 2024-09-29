@@ -2,6 +2,9 @@ import ChatPage from '@/components/ChatPage';
 import { fetchWithAuth } from '@/hooks/fetchWithAuth';
 import { redirect } from 'next/navigation';
 
+export const dynamic = 'force-dynamic';
+// 'auto' | 'force-dynamic' | 'error' | 'force-static'
+
 export default async function Page() {
   try {
     const data = await fetchWithAuth('http://localhost:8000/api/users');
