@@ -8,7 +8,11 @@ import { IoArrowBackOutline } from "react-icons/io5";
 
 const ActiveChatContainer = ({ displayMessages, message, setMessage, sendMessage, username, profilePic: receiverProfile }) => {
     const messageEndRef = useRef(null);
-    const { profilePic: userProfile, handleOpenChatContainer, openChatContainer } = useAuthSelected()
+    const { handleOpenChatContainer, openChatContainer } = useAuthSelected()
+
+    const userProfile = localStorage?.getItem('profilePic');
+
+    console.log(userProfile, receiverProfile);
 
     const scrollToBottom = () => {
         messageEndRef.current?.scrollIntoView({ behaviour: 'smooth', block: 'end' });

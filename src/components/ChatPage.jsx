@@ -13,15 +13,25 @@ import { SlLogout } from "react-icons/sl";
 import LogoutButton from '@/components/ChatBox/sidebar/LogoutButton';
 
 // const socket = io('http://localhost:8000'); // Connect to the server
-const ChatPage = ({userData}) => {
-    const {selectedChat, currentState, openChatContainer} =useAuthSelected()
+const ChatPage = ({userData, accessToken}) => {
+    const {selectedChat,  openChatContainer, handleLogin} =useAuthSelected()
     const {socket, onlineUsers} =useSocket()
     const [message, setMessage] = useState('');
     const [displayMessages, setDisplayMessages] = useState([])
-    const {data,isLoading,isError,fetchData,}  = useFetch()
+    // const {data,isLoading,isError,fetchData,}  = useFetch()
     const {isError:sendingFailed, isLoading:sending, isSuccess:sent, postData:sendMessage, setIsSuccess:setSent} = usePost()
 
-    console.log(selectedChat)
+    useEffect(() => {
+        // const token = typeof window !== 'undefined' && window.localStorage.getItem('token');
+
+        if (accessToken) {
+            localStorage?.setItem('token', accessToken)
+            handleLogin()
+        }
+    }, [accessToken])
+    console.log(userData);
+    // console.log(selectedChat)
+    // console.log(onlineUsers);
     
         useEffect(() => { 
             if (selectedChat && selectedChat.messages.messages?.length > 0) {
@@ -93,6 +103,7 @@ const ChatPage = ({userData}) => {
     }, [sent])
 
 
+    console.log(openChatContainer)
     return (
         <div className='flex justify-center items-center h-screen w-screen'>
             <div className='flex w-full h-full text-slate-200 m-auto backdrop-blur-lg lg:h-[34rem] lg:w-10/12 lg:divide-x-2 lg:divide-slate-300'>

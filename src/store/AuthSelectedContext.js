@@ -1,7 +1,9 @@
 'use client';
+// import { profile } from 'console';
 import { createContext, useReducer, useContext } from 'react';
 
 const Context = createContext({
+  // token: '',
   currentState: '',
   selectedChat: null,
   openChatContainer: false,
@@ -17,6 +19,8 @@ function reducer(state, action) {
       return {
         ...state,
         currentState: 'loggedIn',
+        // token: action.payload,
+        // profilePic: action.payload.pr,
       };
     case 'LOGOUT':
       return {
@@ -49,8 +53,8 @@ export default function ContextProvider({ children }) {
     dispatch({ type: 'CURRENT_CHAT', payload: chat });
   };
 
-  const handleLogin = () => {
-    dispatch({ type: 'LOGIN' });
+  const handleLogin = (token) => {
+    dispatch({ type: 'LOGIN', payload: token });
   };
 
   const handleLogout = () => {
@@ -58,10 +62,11 @@ export default function ContextProvider({ children }) {
   };
 
   const handleOpenChatContainer = (state) => {
-    dispatch({ type: 'OPEN_CHAT_CONTAINER' });
+    dispatch({ type: 'OPEN_CHAT_CONTAINER', payload: state });
   };
 
   const ctxValue = {
+    token: state.token,
     currentState: state.currentState,
     selectedChat: state.selectedChat,
     openChatContainer: state.openChatContainer,

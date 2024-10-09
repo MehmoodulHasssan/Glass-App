@@ -1,8 +1,8 @@
 'use client';
 import { createContext, useState, useEffect, useContext } from 'react';
 import io from 'socket.io-client';
-import { getToken } from '@/utils/getToken';
 import { useAuthSelected } from '@/store/AuthSelectedContext';
+import { useRouter } from 'next/navigation';
 
 const SocketContext = createContext({
   socket: null,
@@ -10,12 +10,17 @@ const SocketContext = createContext({
 });
 
 export const SocketProvider = ({ children }) => {
-  const { currentState, token } = useAuthSelected();
+  const { currentState } = useAuthSelected();
   const [socket, setSocket] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
 
+  const token =
+    typeof window !== 'undefined' && window.localStorage.getItem('token');
+  console.log(token);
+
   useEffect(() => {
     if (currentState === 'loggedIn') {
+      console.log('Frontend Token:', token);
       // Retrieve the token from the cookie
       const socket = io('http://localhost:8000', {
         query: {
@@ -35,7 +40,7 @@ export const SocketProvider = ({ children }) => {
         setSocket(null);
       };
     }
-  }, [currentState]);
+  }, [currentState, token]);
 
   return (
     <SocketContext.Provider value={{ socket, onlineUsers }}>

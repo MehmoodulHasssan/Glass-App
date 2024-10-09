@@ -29,7 +29,8 @@ const LoginPage = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            window.localStorage.setItem('profilePic', resData.profilePic)
+            window.localStorage.setItem('profilePic', resData?.profilePic)
+            window.localStorage.setItem('token', resData?.accessToken)
             handleLogin()
             router.push('/');
         }
